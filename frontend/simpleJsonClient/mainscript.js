@@ -15,8 +15,6 @@ $(document).ready(function () {
     });
     $("#appointment_create").hide();
     
-    $(".list-group .list-group-item form").hide();
-    
     $(".list-group").on("click", ".list-group-item", function(e) {
         $("#overlay_content").html($(this).find("form").clone().show());
 
@@ -64,7 +62,6 @@ $(document).ready(function() {
             type: "GET",
             url: "../backend/serviceHandler.php",
             cache: false,
-            //METHODE ÄNDERN
             data: {method: "queryAppointmentById", param: searchterm},
             dataType: "json",
             success: function (response) {
