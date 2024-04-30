@@ -71,14 +71,15 @@ function new_appointment() {
 function displayAppointments(appointments) {
     var html = "";
     appointments.forEach(function (appointment) {
-        html += "<a href='#' class='list-group-item list-group-item-action'>";
-        html += "<div class='d-flex w-100 justify-content-between'>";
-        html += "<h5 class='mb-1'>" + appointment.name + "</h5>";
-        html += "</div>";
-        html += "<p class='mb-1'>von <strong>" + appointment.participant + "</strong></p>";
-        html += "</a>";
+        html = 
+        "<a href='#' class='list-group-item list-group-item-action'>" 
+        + "<div class='d-flex w-100 justify-content-between'>"
+        + "<h5 class='mb-1'>" + appointment.name + "</h5>"
+        + "</div>"
+        + "<p class='mb-1'>von <strong>" + appointment.participant + "</strong></p>"
+        + "</a>";
     });
-    $(".list-group").html(html);
+    $("#list-group").html(html);
 }
 
 //AJAX-CALLS
