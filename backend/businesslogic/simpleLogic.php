@@ -31,3 +31,4 @@ class SimpleLogic
         return $res;
     }
 }
+
