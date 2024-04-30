@@ -1,12 +1,15 @@
 <?php
 class Appointment {
-    public $id;
-    public $name;
+    public $aid;
+    public $title;
     public $location;
-
-    function __construct($id, $ln, $nm) {
-        $this->id = $id;
-        $this->location = $ln;
-        $this->name = $nm;
+    public $date;
+    public $expiration_date;
+    function __construct($aid, $title, $location, $date, $expiration_date) {
+        $this->aid = $aid;
+        $this->title= $title;
+        $this->location = $location;
+        $this->date = $date;
+        $this->expiration_date = $expiration_date;
       }
 }
