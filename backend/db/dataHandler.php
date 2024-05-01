@@ -3,35 +3,13 @@ require_once('db.php'); // Include database connection
 include("models/appointment.php");
 class DataHandler
 {
-    /*
-    public function queryAppointments()
-    {
-        $res =  $this->getDemoData();
-        return $res;
+    public static function vote_in_appointment($username) {
+
     }
 
-    public function queryAppointmentById($id)
-    {
-        $result = array();
-        foreach ($this->queryAppointments() as $val) {
-            if ($val[0]->id == $id) {
-                array_push($result, $val);
-            }
-        }
-        return $result;
-    }
+    public static function create_new_appointment($title, $location, $expire_date, $status) {
 
-    private static function getDemoData()
-    {
-        $demodata = [
-            [new Appointment(1, "Wienurlaub", "Vienna", "01.01.2001", "expired")],
-            [new Appointment(2, "Work trip NYC", "New York", "01.01.2002", "active")],
-            [new Appointment(3, "London sightseeing", "London", "01.01.2003", "active")],
-            [new Appointment(4, "wasauchimmermaninmoscowmacht", "Moscow", "01.01.2004", "expired")],
-        ];
-        return $demodata;
     }
-    */
 
     public static function queryAppointmentByLocation($location) {
         global $conn;
@@ -41,7 +19,7 @@ class DataHandler
         $appointments = array();
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
-                $appointment = new Appointment($row['aid'], $row['title'], $row['location'], $row['date'], $row['expiration_date']);
+                $appointment = new Appointment($row['aid'], $row['title'], $row['location'], $row['date'], $row['expiration_date'], $row['vote1'], $row['vote2'], $row['vote3'], $row['status']);
                 $appointments[] = $appointment;
             }
         }
@@ -56,13 +34,53 @@ class DataHandler
         $appointments = array();
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
-                $appointment = new Appointment($row['aid'], $row['title'], $row['location'], $row['date'], $row['expiration_date']);
+                $appointment = new Appointment($row['aid'], $row['title'], $row['location'], $row['date'], $row['expiration_date'], $row['vote1'], $row['vote2'], $row['vote3'], $row['status']);
                 $appointments[] = $appointment;
             }
         }
         return json_encode($appointments);
     }
 
+    public static function queryAppointmentById($aid) {
+        global $conn;
+        $sql = "SELECT * FROM Appointments WHERE aid = '$aid'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows == 1) {
+            $row = $result->fetch_assoc();
+            $appointment = new Appointment($row['aid'], $row['title'], $row['location'], $row['date'], $row['expiration_date'], $row['vote1'], $row['vote2'], $row['vote3'], $row['status']);
+            return json_encode($appointment);
+        } else {
+            return null;
+        }
+    }
+
+    public static function queryAppointments() {
+        global $conn;
+        $sql = "SELECT * FROM Appointments";
+        $result = $conn->query($sql);
+    
+        $appointments = array();
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $appointments[] = array(
+                    'aid' => $row['aid'],
+                    'title' => $row['title'],
+                    'location' => $row['location'],
+                    'date' => $row['date'],
+                    'expiration_date' => $row['expiration_date'],
+                    'vote1' => $row['vote1'],
+                    'vote2' => $row['vote2'],
+                    'vote3' => $row['vote3'],
+                    'status' => $row['status']
+                );
+            }
+        }
+        $json_encoded = json_encode($appointments);
+        return json_decode($json_encoded);
+    }
+
+    /*
     public static function queryAppointments() {
         global $conn;
         $sql = "SELECT * FROM Appointments";
@@ -71,26 +89,13 @@ class DataHandler
         $appointments = array();
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
-                $appointment = new Appointment($row['aid'], $row['title'], $row['location'], $row['date'], $row['expiration_date']);
+                $appointment = new Appointment($row['aid'], $row['title'], $row['location'], $row['date'], $row['expiration_date'], $row['vote1'], $row['vote2'], $row['vote3'], $row['status']);
                 $appointments[] = $appointment;
             }
         }
         return json_encode($appointments);
     }
-
-    public static function queryAppointmentById($id) {
-        global $conn;
-        $sql = "SELECT * FROM Appointments WHERE aid = '$id'";
-        $result = $conn->query($sql);
-
-        if ($result->num_rows == 1) {
-            $row = $result->fetch_assoc();
-            $appointment = new Appointment($row['aid'], $row['title'], $row['location'], $row['date'], $row['expiration_date']);
-            return json_encode($appointment);
-        } else {
-            return null; // Appointment not found
-        }
-    }
+    */
 
     public static function insertUser($uid, $username, $comment) {
         global $conn;

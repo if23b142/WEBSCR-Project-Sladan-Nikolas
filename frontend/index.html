@@ -8,6 +8,7 @@
 
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
         <link href="css/myStyle.css" rel="stylesheet">
+        <title>Appointment-Finder</title>
 
     </head>
     <body>
@@ -21,6 +22,44 @@
         </div>
 
         <div id="container">
+            <div class="list-group thisIsCool container">
+                <div class="container" id="appointment_create">
+                    <form>
+                        <h4>New Appointment</h4>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="appointment_name">Name des Appointments</span>
+                            <input type="text" class="form-control" placeholder="zB.: Meeting, ..." aria-label="Username" aria-describedby="new_appointment_name">
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="appointment_ort">Ort des Appointments</span>
+                            <input type="text" class="form-control" placeholder="zB.: Wien" aria-label="Username" aria-describedby="new_appointment_ort">
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="appointment_date">Ablaufdatum des Appointments</span>
+                            <input type="date" class="form-control" placeholder="zB.: 11.10.2024" aria-label="Username" aria-describedby="new_appointment_date">
+                        </div>
+
+                        <h5>Termine</h5>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="new_appointment_select_1">Auswahl 1</span>
+                            <input type="text" class="form-control form-control-sm" placeholder="Auswahl 1" aria-label="Username" aria-describedby="new_appointment_select_1">
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="new_appointment_select_2">Auswahl 2</span>
+                            <input type="text" class="form-control form-control-sm" placeholder="Auswahl 2" aria-label="Username" aria-describedby="new_appointment_select_2">
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="new_appointment_select_3">Auswahl 3</span>
+                            <input type="text" class="form-control form-control-sm" placeholder="Auswahl 3" aria-label="Username" aria-describedby="new_appointment_select_3">
+                        </div>
+
+                        <div class="justify-content-between">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="button" class="btn btn-outline-danger" id="new_appointment">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
             <div class="overlay" id="overlay">
                 <div class="row">
                     <div class="col-sm"></div>
@@ -35,76 +74,12 @@
                     <div class="col-sm"></div>
                 </div>
             </div>
-
-            <div id="list-group"></div>
-
-
-            <div class="list-group container">
-                <a class="list-group-item list-group-item-action" aria-current="true">
-                    <div class="d-flex w-100 justify-content-between">
-                        <h5 class="mb-1">Meeting</h5>
-                    </div>
-                    <div id="content_from_list">
-                        <form id="form_from_list">
-                            <div class="input-group mb-3">
-                                <span class="input-group-text" id="basic-addon1">Name</span>
-                                <input type="text" class="form-control" placeholder="Max Mustermann" aria-label="Username" aria-describedby="basic-addon1">
-                            </div>
-                            <h5>Termine</h5>
-                            
-                            <label for="exampleFormControlTextarea1" class="form-label"><h5>Kommentare</h5></label>
-                            <div class="mb-3" id="comments">
-                                
-                            </div>
-                        </form>
-                    </div>
-                </a>
-
-            <div class="container" id="appointment_create">
-                <form>
-                    <h4>New Appointment</h4>
-                    <div class="input-group mb-3">
-                        <span class="input-group-text" id="appointment_name">Name des Appointments</span>
-                        <input type="text" class="form-control" placeholder="zB.: Meeting, ..." aria-label="Username" aria-describedby="new_appointment_name">
-                    </div>
-                    <div class="input-group mb-3">
-                        <span class="input-group-text" id="appointment_ort">Ort des Appointments</span>
-                        <input type="text" class="form-control" placeholder="zB.: Wien" aria-label="Username" aria-describedby="new_appointment_ort">
-                    </div>
-                    <div class="input-group mb-3">
-                        <span class="input-group-text" id="appointment_date">Ablaufdatum des Appointments</span>
-                        <input type="date" class="form-control" placeholder="zB.: 11.10.2024" aria-label="Username" aria-describedby="new_appointment_date">
-                    </div>
-
-                    <h5>Termine</h5>
-                    <div class="input-group mb-3">
-                        <span class="input-group-text" id="new_appointment_select_1">Auswahl 1</span>
-                        <input type="text" class="form-control form-control-sm" placeholder="Auswahl 1" aria-label="Username" aria-describedby="new_appointment_select_1">
-                    </div>
-                    <div class="input-group mb-3">
-                        <span class="input-group-text" id="new_appointment_select_2">Auswahl 2</span>
-                        <input type="text" class="form-control form-control-sm" placeholder="Auswahl 2" aria-label="Username" aria-describedby="new_appointment_select_2">
-                    </div>
-                    <div class="input-group mb-3">
-                        <span class="input-group-text" id="new_appointment_select_3">Auswahl 3</span>
-                        <input type="text" class="form-control form-control-sm" placeholder="Auswahl 3" aria-label="Username" aria-describedby="new_appointment_select_3">
-                    </div>
-
-                    <div class="justify-content-between">
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                        <button type="button" class="btn btn-outline-danger" id="new_appointment">Cancel</button>
-                    </div>
-                </form>
-            </div>
-
-            <!-- message -->
-            <div class="row">
-                <div class="col-sm"></div>
-                    <div class="col-sm-9" id="searchResult">
-                        <input type="text" readonly class="form-control-plaintext" id="noOfentries">
-                    </div>
-                <div class="col-sm"></div>
-            </div>
+        </div>
+        <div class="list-group container appointment-group"></div>
+    </div>
+        <div class="col-sm-9" id="searchResult">
+            <label for="noOfentries" class="form-label">Number of entries found:</label>
+            <input type="text" readonly class="form-control-plaintext" id="noOfentries">
         </div>
         <script src="simpleJsonClient/mainscript.js"></script>
     </body>

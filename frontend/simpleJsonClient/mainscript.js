@@ -7,23 +7,79 @@ $(document).ready(function () {
         console.log("Cancel Button gedrückt");
     });
 
-    $("#new_appointment").click(function() {
+    $(".new_appointment").click(function() {
         new_appointment();
     });
+
     $("#appointment_create").hide();
+    $(".list-group .list-group-item .content_from_list").hide();
+    $(".voting_button").click(function() {
+        show_form();
+    });
+
+    $(".statistic_button").hide();
+    $(".statistic_button").click(function() {
+        show_statistic();
+    });
+    
     $(".list-group").on("click", ".list-group-item", function(e) {
-        $("#overlay_content").html($(this).find("form").clone().show());
+
+        $("#overlay_content").html($(this).find(".content_from_list").clone().show());
+
+        $("#overlay_content .form_from_list").hide();
+        
+        $('.white-box h4').text($(this).find('h5:first').text());
+
         $("#overlay").show();
+
         e.stopPropagation();
     });
 
     $(document).on("click", function(e) {
+        //console.log("hallo");
         if (!$(e.target).closest('.white-box').length) {
             $('#overlay_content').empty();
             $("#overlay").hide();
+            show_statistic();
         }
     });
+
+    $('.form_from_appointment_create').submit(function(event) {
+        create_new_appointment();
+    });
+
+    $('.form_from_list').submit(function(event) {
+        event.preventDefault();
+        
+        vote_in_appointment();
+    });
 });
+
+function cancel_Button(){
+    $("#cancel_button").click(function() {
+        $('#overlay_content').empty();
+        $("#overlay").hide();
+        show_statistic();
+    });
+}
+
+function show_form(){
+        $(".statistic_button").show(200);
+        $(".voting_button").hide(200);
+        $("#overlay_content .form_from_list").show(200);
+        $("#overlay_content .statistic_from_list").hide(200);
+}
+
+function show_statistic(){
+        $(".statistic_button").hide(200);
+        $(".voting_button").show(200);
+        $("#overlay_content .form_from_list").hide(200);
+        $("#overlay_content .statistic_from_list").show(200);
+}
+
+function new_appointment() {
+    $("#appointment_create").toggle(300);
+}
 
 //FUNKTIONEN
 function loaddata() {
@@ -31,38 +87,115 @@ function loaddata() {
         type: "GET",
         url: "../backend/serviceHandler.php",
         cache: false,
-        data: {method: "queryAppointmentById"},
+        data: {method: "queryAppointments", param: 0},
         dataType: "json",
         success: function (response) {
-            console.log("Hallo");
-            $('#list-group').empty();
-            response.forEach(function(appointment){
-                $('#list-group').append(
-                    '<a class="list-group-item list-group-action" aria-current="true">' +
-                        '<div class="d-flex w-100 justify-content-between">' +
-                            '<h5 class="mb-1">' + appointment.title + '</h5>' +
-                            '<small>bis <strong>' + appointment.expire_date + '</strong></small>' +
-                        '</div>' +
-                        '<div class="content_from_list">' +
+            $("#noOfentries").val(response.length);
+            $("#searchResult").show(1000).delay(1000).hide(1000);
+
+            response.forEach(element => {
+                $('.thisIsCool').append(
+                '<a class="list-group-item list-group-item-action" aria-current="true">' +
+                    '<div class="d-flex w-100 justify-content-between">' +
+                        '<h5 class="mb-1">' + element.title +'</h5>' +
+                        '<small>am <strong>' + element.date + '</strong></small>' +
+                        '<small>voting bis <strong>' + element.expiration_date + '</strong></small>' +
+                    '</div>' +
+                    '<div class="content_from_list">' +
+
+                        '<div class="statistic_from_list">' +
                             '<ul class="list-group list-group-horizontal">' +
                                 '<li class="list-group-item list-group-item-dark">Ort</li>' +
-                                '<li class="list-group-item flex-grow-1">' + appointment.location + '</li>' +
+                                '<li class="list-group-item flex-grow-1">'+ element.location +'</li>' +
                             '</ul>' +
-                        '<div>' +
-                    '</a>'
+                            
+                            '<br>' +
+                            '<h5>Abstimmung:</h5>' +
+                            '<ol class="list-group list-group-numbered">' +
+                                '<li class="list-group-item d-flex justify-content-between align-items-start">' +
+                                    '<div class="fw-bold ms-2 me-auto">Vote1</div>' +
+                                    '<span class="badge bg-primary rounded-pill">' + (element.vote1 ? element.vote1 + 'Votes' : '') + '</span>' +
+                                '</li>' +
+                                '<li class="list-group-item d-flex justify-content-between align-items-start">' +
+                                    '<div class="fw-bold ms-2 me-auto">Vote2</div>' +
+                                    '<span class="badge bg-primary rounded-pill">' + (element.vote2 ? element.vote2 + 'Votes' : '') + '</span>' +
+                                '</li>' +
+                                '<li class="list-group-item d-flex justify-content-between align-items-start">' +
+                                    '<div class="fw-bold ms-2 me-auto">Vote3</div>' +
+                                    '<span class="badge bg-primary rounded-pill">' + (element.vote3 ? element.vote3 + 'Votes' : '') + '</span>' +
+                                '</li>' +
+                            '</ol>' +
+                            '<br>' +
+                            /*
+                            '<h5>Kommentare:</h5>' +
+                            '<ul class="list-group list-group-horizontal">' +
+                                '<li class="list-group-item list-group-item-dark">Niki</li>' +
+                                '<li class="list-group-item flex-grow-1">Ein tolles Meeting!</li>' + 
+                            '</ul>' +
+                            */
+                        '</div>' +
+                        '<form class="form_from_list">' +
+                            '<div class="input-group mb-3">' +
+                                '<span class="input-group-text" id="basic-addon1">Name</span>' +
+                                '<input type="text" class="form-control" placeholder="zB.: Max Mustermann" aria-label="Username" aria-describedby="basic-addon1">' +
+                            '</div>' +
+                            '<h5>Termine</h5>' +
+                            '<div class="form-check">' +
+                                '<input type="checkbox" class="form-check-input" value="" id="exampleCheck1">' +
+                                '<label class="form-check-label" for="exampleCheck1">12:00 - 12:30</label>' +
+                            '</div>' +
+                            '<div class="form-check">' +
+                                '<input type="checkbox" class="form-check-input" value="" id="exampleCheck2">' +
+                                '<label class="form-check-label" for="exampleCheck2">13:00 - 14:00</label>' +
+                            '</div>' +
+                            '<div class="form-check">' +
+                                '<input type="checkbox" class="form-check-input" value="" id="exampleCheck3">' +
+                                '<label class="form-check-label" for="exampleCheck3">15:00 - 16:00</label>' +
+                            '</div>' +
+                            '<div class="mb-3">' +
+                                '<label for="exampleFormControlTextarea1" class="form-label"><h5>Kommentare</h5></label>' +
+                                '<textarea class="form-control form-control-sm" id="exampleFormControlTextarea1" rows="3"></textarea>' +
+                            '</div>' +
+                            '<button type="submit" class="btn btn-primary">Submit</button>' +
+                            '<button type="button" class="btn btn-outline-danger" id="cancel_button">Cancel</button>' +
+                        '</form>' +
+                    '</div>' +
+                '</a>'
                 );
             });
+            $(".list-group .list-group-item .content_from_list").hide();
+        } , error: function(){
+            console.log("FEHLER");
         }
     });
 }
 
-function cancel_Button(){
-    $("#cancel_button").click(function() {
-        $('#overlay_content').empty();
-        $("#overlay").hide();
+function create_new_appointment(){
+    $.ajax({
+        type: "GET",
+        url: "../backend/serviceHandler.php",
+        cache: false,
+        data: {method: "create_new_appointment", param: 0},
+        dataType: "json",
+        success: function (response) {
+            console.log("CREATE APPOINTMENT FUNKTIONIERT");
+        } , error: function(){
+            console.log("FEHLER IM CREATE APPOINTMENT");
+        }
     });
 }
 
-function new_appointment() {
-    $("#appointment_create").toggle(300);
+function vote_in_appointment(){
+    $.ajax({
+        type: "GET",
+        url: "../backend/serviceHandler.php",
+        cache: false,
+        data: {method: "vote_in_appointment", param: 0},
+        dataType: "json",
+        success: function (response) {
+            alert("VOTE APPOINTMENT FUNKTIONIERT");
+        } , error: function(){
+            console.log("FEHLER IM VOTE APPOINTMENT");
+        }
+    });
 }
