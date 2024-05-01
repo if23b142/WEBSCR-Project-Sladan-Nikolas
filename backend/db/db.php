@@ -2,8 +2,8 @@
 // Database connection parameters
 $host = 'localhost'; // or your host name
 $dbname = 'appointment_management';
-$username = '';
-$password = '';
+$username = 'bif2webscriptinguser';
+$password = 'bif2021';
 
 // Create connection
 $conn = new mysqli($host, $username, $password, $dbname);

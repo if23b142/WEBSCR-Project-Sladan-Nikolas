@@ -1,5 +1,5 @@
 <?php
-
+require_once('backend/db/db.php');
 class user
 {
     public $uid;
@@ -12,4 +12,5 @@ class user
         $this->username = $username;
         $this->comment = $comment;
     }
+
 }
