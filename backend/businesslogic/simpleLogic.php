@@ -1,5 +1,5 @@
 <?php
-include("backend/db/dataHandler.php");
+include("../db/dataHandler.php");
 
 class SimpleLogic
 {

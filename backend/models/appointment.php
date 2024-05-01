@@ -6,11 +6,11 @@ class Appointment {
     public $expire_date;
     public $status;
 
-    function __construct($id, $ln, $nm, $ed, $st) {
+    function __construct($id, $location, $name, $expire_date, $status) {
         $this->id = $id;
-        $this->location = $ln;
-        $this->name = $nm;
-        $this->expire_date = $ed;
-        $this->status = $st;
+        $this->location = $location;
+        $this->name = $name;
+        $this->expire_date = $expire_date;
+        $this->status = $status;
       }
 }
