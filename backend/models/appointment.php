@@ -1,7 +1,7 @@
 <?php
 class Appointment {
-    public $id;
-    public $name;
+    public $aid;
+    public $title;
     public $location;
     public $expire_date;
     public $status;
