@@ -19,35 +19,13 @@ class DataHandler
         return $result;
     }
 
-    public function queryAppointmentByName($name)
-    {
-        $result = array();
-        foreach ($this->queryAppointments() as $val) {
-            if ($val[0]->name == $name) {
-                array_push($result, $val);
-            }
-        }
-        return $result;
-    }
-
-    public function queryAppointmentByLocation($location)
-    {
-        $result = array();
-        foreach ($this->queryAppointments() as $val) {
-            if ($val[0]->location == $location) {
-                array_push($result, $val);
-            }
-        }
-        return $result;
-    }
-
     private static function getDemoData()
     {
         $demodata = [
-            [new Appointment(1, "Wienurlaub", "Vienna")],
-            [new Appointment(2, "Work trip NYC", "New York")],
-            [new Appointment(3, "London sightseeing", "London")],
-            [new Appointment(4, "wasauchimmermaninmoscowmacht", "Moscow")],
+            [new Appointment(1, "Wienurlaub", "Vienna", "01.01.2001", "expired")],
+            [new Appointment(2, "Work trip NYC", "New York", "01.01.2002", "active")],
+            [new Appointment(3, "London sightseeing", "London", "01.01.2003", "active")],
+            [new Appointment(4, "wasauchimmermaninmoscowmacht", "Moscow", "01.01.2004", "expired")],
         ];
         return $demodata;
     }
