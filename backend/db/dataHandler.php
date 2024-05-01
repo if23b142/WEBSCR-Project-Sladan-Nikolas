@@ -1,6 +1,6 @@
 <?php
 require_once('db.php'); // Include database connection
-include("../models/appointment.php");
+include("models/appointment.php");
 class DataHandler
 {
     /*
@@ -31,7 +31,6 @@ class DataHandler
         ];
         return $demodata;
     }
-
     */
 
     public static function queryAppointmentByLocation($location) {
