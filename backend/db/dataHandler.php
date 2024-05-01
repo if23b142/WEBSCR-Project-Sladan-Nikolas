@@ -68,7 +68,7 @@ class DataHandler
                 $appointments[] = $appointment;
             }
         }
-        return $appointments;
+        return json_encode($appointments);
     }
 
     public static function queryAppointmentByName($name) {
@@ -83,7 +83,7 @@ class DataHandler
                 $appointments[] = $appointment;
             }
         }
-        return $appointments;
+        return json_encode($appointments);
     }
 
     public static function queryAppointments() {
@@ -98,7 +98,7 @@ class DataHandler
                 $appointments[] = $appointment;
             }
         }
-        return $appointments;
+        return json_encode($appointments);
     }
 
     public static function queryAppointmentById($id) {
@@ -109,7 +109,7 @@ class DataHandler
         if ($result->num_rows == 1) {
             $row = $result->fetch_assoc();
             $appointment = new Appointment($row['aid'], $row['title'], $row['location'], $row['date'], $row['expiration_date']);
-            return $appointment;
+            return json_encode($appointment);
         } else {
             return null; // Appointment not found
         }
@@ -120,7 +120,7 @@ class DataHandler
         $sql = "INSERT INTO Users (uid, username, comment) VALUES ('$uid', '$username', '$comment')";
         return $conn->query($sql);
     }
-    
+
     public static function insertAppointment($aid, $title, $location, $date, $expiration_date) {
         global $conn;
         $sql = "INSERT INTO Appointments (aid, title, location, date, expiration_date) VALUES ('$aid', '$title', '$location', '$date', '$expiration_date')";
