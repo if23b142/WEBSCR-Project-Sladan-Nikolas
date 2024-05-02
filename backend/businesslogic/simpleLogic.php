@@ -18,12 +18,12 @@ class SimpleLogic
                 if(isset($param['title'], $param['location'], $param['date'], $param['expiration_date'])) {
                     $res = $this->dh->insertAppointment(
                         $param['title'],
-                        $param['location'], 
-                        $param['date'], 
-                        $param['expiration_date'], 
-                        null, 
-                        null, 
-                        null, 
+                        $param['location'],
+                        $param['date'],
+                        $param['expiration_date'],
+                        null,
+                        null,
+                        null,
                         'Y'
                     );
                 } 
