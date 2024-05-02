@@ -163,24 +163,27 @@ function loaddata() {
             });
             $(".list-group .list-group-item .content_from_list").hide();
         } , error: function(){
-            console.log("FEHLER");
+            console.log("FEHLER1");
         }
     });
 }
 
 $('.appointment_form').submit(function(event) {
+    // Prevent default form submission
     event.preventDefault();
 
+    // Capture form data
     var appointmentName = $('#appointmentName').val();
     var appointmentLocation = $('#appointmentLocation').val();
     var appointmentDate = $('#appointmentDate').val();
     var appointmentExpirationDate = $('#appointmentExpirationDate').val();
 
+    // Send data to server using AJAX
     $.ajax({
         type: "POST",
-        url: "../backend/db/dataHandler.php",
+        url: "../backend/serviceHandler.php",
         data: {
-            method: "insertAppointment",
+            method2: "insertAppointment",
             title: appointmentName,
             location: appointmentLocation,
             date: appointmentDate,
@@ -188,9 +191,12 @@ $('.appointment_form').submit(function(event) {
         },
         dataType: "json",
         success: function(response) {
+            // Handle success response from the server (if any)
             console.log("Appointment created successfully!");
+            // You can perform further actions here, such as showing a success message or redirecting the user.
         },
-        error: function() {
+        error: function(response) {
+            // Handle errors (if any)
             console.log("Error creating appointment!");
         }
     });
