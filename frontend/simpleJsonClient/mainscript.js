@@ -23,20 +23,14 @@ $(document).ready(function () {
     });
     
     $(".list-group").on("click", ".list-group-item", function(e) {
-
         $("#overlay_content").html($(this).find(".content_from_list").clone().show());
-
         $("#overlay_content .form_from_list").hide();
-        
         $('.white-box h4').text($(this).find('h5:first').text());
-
         $("#overlay").show();
-
         e.stopPropagation();
     });
 
     $(document).on("click", function(e) {
-        //console.log("hallo");
         if (!$(e.target).closest('.white-box').length) {
             $('#overlay_content').empty();
             $("#overlay").hide();
@@ -113,15 +107,15 @@ function loaddata() {
                             '<h5>Abstimmung:</h5>' +
                             '<ol class="list-group list-group-numbered">' +
                                 '<li class="list-group-item d-flex justify-content-between align-items-start">' +
-                                    '<div class="fw-bold ms-2 me-auto">Vote1</div>' +
+                                    '<div class="fw-bold ms-2 me-auto">9:00 - 12:00</div>' +
                                     '<span class="badge bg-primary rounded-pill">' + (element.vote1 ? element.vote1 + 'Votes' : '') + '</span>' +
                                 '</li>' +
                                 '<li class="list-group-item d-flex justify-content-between align-items-start">' +
-                                    '<div class="fw-bold ms-2 me-auto">Vote2</div>' +
+                                    '<div class="fw-bold ms-2 me-auto">12:30 - 15:00</div>' +
                                     '<span class="badge bg-primary rounded-pill">' + (element.vote2 ? element.vote2 + 'Votes' : '') + '</span>' +
                                 '</li>' +
                                 '<li class="list-group-item d-flex justify-content-between align-items-start">' +
-                                    '<div class="fw-bold ms-2 me-auto">Vote3</div>' +
+                                    '<div class="fw-bold ms-2 me-auto">15:00 - 18:00</div>' +
                                     '<span class="badge bg-primary rounded-pill">' + (element.vote3 ? element.vote3 + 'Votes' : '') + '</span>' +
                                 '</li>' +
                             '</ol>' +
@@ -185,7 +179,7 @@ function create_new_appointment(){
     });
 }
 
-function vote_in_appointment(){
+function votes_for_appointment(){
     $.ajax({
         type: "GET",
         url: "../backend/serviceHandler.php",
