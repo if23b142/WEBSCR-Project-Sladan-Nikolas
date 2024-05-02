@@ -84,10 +84,14 @@ function loaddata() {
         data: {method: "queryAppointments", param: 0},
         dataType: "json",
         success: function (response) {
+            
             $("#noOfentries").val(response.length);
             $("#searchResult").show(1000).delay(1000).hide(1000);
 
             response.forEach(element => {
+                var vote1 = element.vote1 ? element.vote1 + 'Votes' : ''
+                var vote2 = element.vote2 ? element.vote2 + 'Votes' : ''
+                var vote3 = element.vote3 ? element.vote3 + 'Votes' : ''
                 $('.thisIsCool').append(
                 '<a class="list-group-item list-group-item-action" aria-current="true">' +
                     '<div class="d-flex w-100 justify-content-between">' +
@@ -108,15 +112,15 @@ function loaddata() {
                             '<ol class="list-group list-group-numbered">' +
                                 '<li class="list-group-item d-flex justify-content-between align-items-start">' +
                                     '<div class="fw-bold ms-2 me-auto">9:00 - 12:00</div>' +
-                                    '<span class="badge bg-primary rounded-pill">' + (element.vote1 ? element.vote1 + 'Votes' : '') + '</span>' +
+                                    '<span class="badge bg-primary rounded-pill">' + vote1 + '</span>' +
                                 '</li>' +
                                 '<li class="list-group-item d-flex justify-content-between align-items-start">' +
                                     '<div class="fw-bold ms-2 me-auto">12:30 - 15:00</div>' +
-                                    '<span class="badge bg-primary rounded-pill">' + (element.vote2 ? element.vote2 + 'Votes' : '') + '</span>' +
+                                    '<span class="badge bg-primary rounded-pill">' + vote2 + '</span>' +
                                 '</li>' +
                                 '<li class="list-group-item d-flex justify-content-between align-items-start">' +
                                     '<div class="fw-bold ms-2 me-auto">15:00 - 18:00</div>' +
-                                    '<span class="badge bg-primary rounded-pill">' + (element.vote3 ? element.vote3 + 'Votes' : '') + '</span>' +
+                                    '<span class="badge bg-primary rounded-pill">' + vote3 + '</span>' +
                                 '</li>' +
                             '</ol>' +
                             '<br>' +
@@ -164,30 +168,50 @@ function loaddata() {
     });
 }
 
-function create_new_appointment(){
+$('form').submit(function(event) {
+    // Prevent default form submission
+    event.preventDefault();
+
+    // Capture form data
+    var appointmentName = $('#appointmentName').val();
+    var appointmentLocation = $('#appointmentLocation').val();
+    var appointmentDate = $('#appointmentDate').val();
+    var appointmentExpirationDate = $('#appointmentExpirationDate').val();
+
+    // Send data to server using AJAX
     $.ajax({
-        type: "GET",
-        url: "../backend/serviceHandler.php",
-        cache: false,
-        data: {method: "create_new_appointment", param: 0},
+        type: "POST",
+        url: "../backend/db/dataHandler.php",
+        data: {
+            method: "insertAppointment",
+            title: appointmentName,
+            location: appointmentLocation,
+            date: appointmentDate,
+            expiration_date: appointmentExpirationDate
+        },
         dataType: "json",
-        success: function (response) {
-            console.log("CREATE APPOINTMENT FUNKTIONIERT");
-        } , error: function(){
-            console.log("FEHLER IM CREATE APPOINTMENT");
+        success: function(response) {
+            // Handle success response from the server (if any)
+            console.log("Appointment created successfully!");
+            // You can perform further actions here, such as showing a success message or redirecting the user.
+        },
+        error: function() {
+            // Handle errors (if any)
+            console.log("Error creating appointment!");
         }
     });
-}
+});
 
 function votes_for_appointment(){
     $.ajax({
         type: "GET",
         url: "../backend/serviceHandler.php",
         cache: false,
-        data: {method: "vote_in_appointment", param: 0},
+        data: {method: "votes_for_appointment", param: 0},
         dataType: "json",
         success: function (response) {
             alert("VOTE APPOINTMENT FUNKTIONIERT");
+            insertAppointment($aid, $title, $location, $date, $expiration_date);
         } , error: function(){
             console.log("FEHLER IM VOTE APPOINTMENT");
         }

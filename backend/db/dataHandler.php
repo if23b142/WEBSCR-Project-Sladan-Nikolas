@@ -1,14 +1,14 @@
 <?php
-require_once('db.php'); // Include database connection
+require_once('db.php');
 include("models/appointment.php");
 class DataHandler
 {
-    public static function vote_in_appointment($username) {
+    public static function votes_for_appointment($username) {
 
     }
 
     public static function create_new_appointment($title, $location, $expire_date, $status) {
-
+        global $conn;
     }
 
     public static function queryAppointmentByLocation($location) {
@@ -76,8 +76,7 @@ class DataHandler
                 );
             }
         }
-        $json_encoded = json_encode($appointments);
-        return json_decode($json_encoded);
+        return $appointments;
     }
 
     /*
@@ -97,15 +96,9 @@ class DataHandler
     }
     */
 
-    public static function insertUser($uid, $username, $comment) {
+    public static function insertAppointment($title, $location, $date, $expiration_date, $vote1, $vote2, $vote3, $status) {
         global $conn;
-        $sql = "INSERT INTO Users (uid, username, comment) VALUES ('$uid', '$username', '$comment')";
-        return $conn->query($sql);
-    }
-
-    public static function insertAppointment($aid, $title, $location, $date, $expiration_date) {
-        global $conn;
-        $sql = "INSERT INTO Appointments (aid, title, location, date, expiration_date) VALUES ('$aid', '$title', '$location', '$date', '$expiration_date')";
+        $sql = "INSERT INTO Appointments (aid, title, location, date, expiration_date) VALUES ('$title', '$location', '$date', '$expiration_date', '$vote1', '$vote2', '$vote3', '$status')";
         return $conn->query($sql);
     }
 }

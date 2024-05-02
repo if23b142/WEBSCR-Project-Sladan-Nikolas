@@ -16,7 +16,18 @@ class SimpleLogic
                 $res = $this->dh->queryAppointments();
                 break;
             case "create_new_appointment":
-                $res = $this->dh->create_new_appointment($title, $location, $date, $expiration_date, 'Y');
+                if(isset($param['title'], $param['location'], $param['date'], $param['expiration_date'])) {
+                    $res = $this->dh->insertAppointment(
+                        $param['title'],
+                        $param['location'], 
+                        $param['date'], 
+                        $param['expiration_date'], 
+                        null, 
+                        null, 
+                        null, 
+                        'Y'
+                    );
+                } 
                 break;
             case "vote_in_appointment":
                 $res = $this->dh->votes_for_appointment();

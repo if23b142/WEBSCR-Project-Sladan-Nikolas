@@ -1,5 +1,5 @@
 <?php
-require_once('backend/db/db.php');
+require_once('db/db.php');
 class user
 {
     public $uid;
