@@ -9,49 +9,17 @@ class SimpleLogic
         $this->dh = new DataHandler();
     }
     
+//handles request(for output)
     function handleRequest($method, $param)
     {
-        switch ($method) {
-            case "queryAppointments":
-                $res = $this->dh->queryAppointments();
-                break;
-            case "insertAppointment":
-                if(isset($param['title'], $param['location'], $param['date'], $param['expiration_date'])) {
-                    $res = $this->dh->insertAppointment(
-                        $param['title'],
-                        $param['location'], 
-                        $param['date'], 
-                        $param['expiration_date'], 
-                        null, 
-                        null, 
-                        null, 
-                        'Y'
-                    );
-                } 
-                break;
-            case "votes_for_appointment":
-                $res = $this->dh->votes_for_appointment();
-                break;
-            default:
-                $res = null;
-                break;
-        }
+        $res = $this->dh->queryAppointments();
         return $res;
     }
-    
 
+    //handles request2(for insertion)
     function handleRequest2($method, $title, $location, $date, $expiration_date)
     {
-        switch ($method) {
-            case "insertAppointment":
-                $res = $this->dh->insertAppointment($title, $location, $date, $expiration_date);
-                break;
-            default:
-                $res = null;
-                break;
-        }
+        $res = $this->dh->insertAppointment($title, $location, $date, $expiration_date);
         return $res;
     }
-
-
 }

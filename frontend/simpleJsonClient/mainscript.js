@@ -1,27 +1,42 @@
 $(document).ready(function () {
+    // Initially hide search result
     $("#searchResult").hide();
+
+    // Load data when the document is ready
     loaddata();
+
+    //cancel button functionality
     $(document).on("click", "#cancel_button", function() {
+        // Clear overlay conten and hide overlay
         $('#overlay_content').empty();
         $("#overlay").hide();
-        console.log("Cancel Button gedrückt");
     });
 
+    //new appointment button functionality
     $(".new_appointment").click(function() {
         new_appointment();
     });
 
+    //new appointment section should be hidden at first
     $("#appointment_create").hide();
+
+    //list section should be hidden at first
     $(".list-group .list-group-item .content_from_list").hide();
+
+    //voting button functionality
     $(".voting_button").click(function() {
         show_form();
     });
 
+    // Hide statistic button initially
     $(".statistic_button").hide();
+
+    //statistic button functionality
     $(".statistic_button").click(function() {
         show_statistic();
     });
     
+    // Event listener to display content on list item click
     $(".list-group").on("click", ".list-group-item", function(e) {
         $("#overlay_content").html($(this).find(".content_from_list").clone().show());
         $("#overlay_content .form_from_list").hide();
@@ -30,6 +45,7 @@ $(document).ready(function () {
         e.stopPropagation();
     });
 
+    //overlay should be hidden when button is clicked
     $(document).on("click", function(e) {
         if (!$(e.target).closest('.white-box').length) {
             $('#overlay_content').empty();
@@ -38,10 +54,13 @@ $(document).ready(function () {
         }
     });
 
+    // Event listener for appointment form submission
     $('.form_from_appointment_create').submit(function(event) {
+        event.preventDefault();
         create_new_appointment();
     });
 
+    // Event listener for form submission within list
     $('.form_from_list').submit(function(event) {
         event.preventDefault();
         
@@ -49,6 +68,8 @@ $(document).ready(function () {
     });
 });
 
+//FUNCTIONS
+// Function to handle cancel button click
 function cancel_Button(){
     $("#cancel_button").click(function() {
         $('#overlay_content').empty();
@@ -57,6 +78,7 @@ function cancel_Button(){
     });
 }
 
+// Function to show voting form
 function show_form(){
         $(".statistic_button").show(200);
         $(".voting_button").hide(200);
@@ -64,6 +86,7 @@ function show_form(){
         $("#overlay_content .statistic_from_list").hide(200);
 }
 
+// Function to show statistics
 function show_statistic(){
         $(".statistic_button").hide(200);
         $(".voting_button").show(200);
@@ -71,11 +94,12 @@ function show_statistic(){
         $("#overlay_content .statistic_from_list").show(200);
 }
 
+// Function to toggle appointment creation section
 function new_appointment() {
     $("#appointment_create").toggle(300);
 }
 
-//FUNKTIONEN
+// Function to load appointments from server
 function loaddata() {
     $.ajax({
         type: "GET",
@@ -84,16 +108,17 @@ function loaddata() {
         data: {method: "queryAppointments", param: 0},
         dataType: "json",
         success: function (response) {
-            
-            $("#noOfentries").val(response.length);
-            $("#searchResult").show(1000).delay(1000).hide(1000);
-
             response.forEach(element => {
+                //displays nothing when the content is null
                 var vote1 = element.vote1 ? element.vote1 + 'Votes' : ''
                 var vote2 = element.vote2 ? element.vote2 + 'Votes' : ''
                 var vote3 = element.vote3 ? element.vote3 + 'Votes' : ''
+
+                //display changed based on status
+                var statusClass = element.status === 'N' ? 'text-danger' : '';
+
                 $('.thisIsCool').append(
-                '<a class="list-group-item list-group-item-action" aria-current="true">' +
+                '<a class="list-group-item list-group-item-action ' + statusClass + '" aria-current="true">' +
                     '<div class="d-flex w-100 justify-content-between">' +
                         '<h5 class="mb-1">' + element.title +'</h5>' +
                         '<small>am <strong>' + element.date + '</strong></small>' +
@@ -112,25 +137,18 @@ function loaddata() {
                             '<ol class="list-group list-group-numbered">' +
                                 '<li class="list-group-item d-flex justify-content-between align-items-start">' +
                                     '<div class="fw-bold ms-2 me-auto">9:00 - 12:00</div>' +
-                                    '<span class="badge bg-primary rounded-pill">' + vote1 + '</span>' +
+                                    '<span class="badge bg-primary rounded">' + vote1 + '</span>' +
                                 '</li>' +
                                 '<li class="list-group-item d-flex justify-content-between align-items-start">' +
                                     '<div class="fw-bold ms-2 me-auto">12:30 - 15:00</div>' +
-                                    '<span class="badge bg-primary rounded-pill">' + vote2 + '</span>' +
+                                    '<span class="badge bg-primary rounded">' + vote2 + '</span>' +
                                 '</li>' +
                                 '<li class="list-group-item d-flex justify-content-between align-items-start">' +
                                     '<div class="fw-bold ms-2 me-auto">15:00 - 18:00</div>' +
-                                    '<span class="badge bg-primary rounded-pill">' + vote3 + '</span>' +
+                                    '<span class="badge bg-primary rounded">' + vote3 + '</span>' +
                                 '</li>' +
                             '</ol>' +
                             '<br>' +
-                            /*
-                            '<h5>Kommentare:</h5>' +
-                            '<ul class="list-group list-group-horizontal">' +
-                                '<li class="list-group-item list-group-item-dark">Niki</li>' +
-                                '<li class="list-group-item flex-grow-1">Ein tolles Meeting!</li>' + 
-                            '</ul>' +
-                            */
                         '</div>' +
                         '<form class="form_from_list">' +
                             '<div class="input-group mb-3">' +
@@ -168,6 +186,7 @@ function loaddata() {
     });
 }
 
+// Function to create appointments
 $('.appointment_form').submit(function(event) {
     // Prevent default form submission
     event.preventDefault();
@@ -199,6 +218,7 @@ $('.appointment_form').submit(function(event) {
     });
 });
 
+// Function to create votes(prototype)
 function votes_for_appointment(){
     $.ajax({
         type: "GET",

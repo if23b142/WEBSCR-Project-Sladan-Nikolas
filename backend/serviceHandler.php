@@ -1,5 +1,4 @@
 <?php
-
 include("businesslogic/simpleLogic.php");
 
 $param = "";
@@ -9,10 +8,10 @@ isset($_GET["param"]) ? $param = $_GET["param"] : false;
 
 isset($_POST["method2"]) ? $method = $_POST["method2"] : false;
 
+//instantiates object of type SimpleLigic
 $logic = new SimpleLogic();
 
-
-
+//handles GET-method "method" to queryAppointments form server
 if( isset($_GET["method"]) && $_GET["method"] == "queryAppointments" ) {
     $result = $logic->handleRequest($method, $param );
     if ($result == null) {
@@ -22,6 +21,7 @@ if( isset($_GET["method"]) && $_GET["method"] == "queryAppointments" ) {
     }
 }
 
+//handles POST-method "method2" to insert new appointments into database
 if (isset($_POST["method2"]) && $_POST["method2"] == "insertAppointment") {
     $result = $logic->handleRequest2( $_POST["method2"], $_POST["title"], $_POST["location"], $_POST["date"], $_POST["expiration_date"]);
     if ($result == null) {
@@ -31,6 +31,7 @@ if (isset($_POST["method2"]) && $_POST["method2"] == "insertAppointment") {
     }
 }
 
+//sends HTTP responses in JSON format based on the provided parameters
 function response($method, $httpStatus, $data)
 {
     header('Content-Type: application/json');
