@@ -29,7 +29,7 @@ class SimpleLogic
                     );
                 } 
                 break;
-            case "vote_in_appointment":
+            case "votes_for_appointment":
                 $res = $this->dh->votes_for_appointment();
                 break;
             default:

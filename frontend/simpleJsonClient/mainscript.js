@@ -168,7 +168,7 @@ function loaddata() {
     });
 }
 
-$('form').submit(function(event) {
+$('.appointment_form').submit(function(event) {
     // Prevent default form submission
     event.preventDefault();
 

@@ -3,13 +3,6 @@ require_once('db.php');
 include("models/appointment.php");
 class DataHandler
 {
-    public static function votes_for_appointment($username) {
-
-    }
-
-    public static function create_new_appointment($title, $location, $expire_date, $status) {
-        global $conn;
-    }
 
     public static function queryAppointmentByLocation($location) {
         global $conn;
@@ -100,5 +93,9 @@ class DataHandler
         global $conn;
         $sql = "INSERT INTO Appointments (aid, title, location, date, expiration_date) VALUES ('$title', '$location', '$date', '$expiration_date', '$vote1', '$vote2', '$vote3', '$status')";
         return $conn->query($sql);
+    }
+
+    public static function votes_for_appointment($username) {
+        $sql = "INSERT INTO Appointments (aid, title, location, date, expiration_date) VALUES ()";
     }
 }

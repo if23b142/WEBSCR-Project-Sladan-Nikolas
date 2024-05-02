@@ -30,12 +30,9 @@ function response($method, $httpStatus, $data)
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Read the raw POST data
     $postData = file_get_contents("php://input");
-    // Decode the JSON data
     $postDataArray = json_decode($postData, true);
 
-    // Check if method and param exist in the JSON data
     if (isset($postDataArray["method"])) {
         $method = $postDataArray["method"];
     }
