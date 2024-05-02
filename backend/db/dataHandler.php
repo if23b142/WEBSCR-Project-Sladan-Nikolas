@@ -29,7 +29,7 @@ class DataHandler
 
     public static function insertAppointment($title, $location, $date, $expiration_date, $vote1, $vote2, $vote3, $status) {
         global $conn;
-        $sql = "INSERT INTO Appointments (aid, title, location, date, expiration_date) VALUES ('$title', '$location', '$date', '$expiration_date', '$vote1', '$vote2', '$vote3', '$status')";
+        $sql = "INSERT INTO Appointments (aid, title, location, date, expiration_date, vote1, vote2, vote3, status) VALUES ('$title', '$location', '$date', '$expiration_date', '$vote1', '$vote2', '$vote3', '$status')";
         return $conn->query($sql);
     }
 
