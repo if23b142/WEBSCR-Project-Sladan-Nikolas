@@ -169,16 +169,13 @@ function loaddata() {
 }
 
 $('.appointment_form').submit(function(event) {
-    // Prevent default form submission
     event.preventDefault();
 
-    // Capture form data
     var appointmentName = $('#appointmentName').val();
     var appointmentLocation = $('#appointmentLocation').val();
     var appointmentDate = $('#appointmentDate').val();
     var appointmentExpirationDate = $('#appointmentExpirationDate').val();
 
-    // Send data to server using AJAX
     $.ajax({
         type: "POST",
         url: "../backend/db/dataHandler.php",
@@ -191,12 +188,9 @@ $('.appointment_form').submit(function(event) {
         },
         dataType: "json",
         success: function(response) {
-            // Handle success response from the server (if any)
             console.log("Appointment created successfully!");
-            // You can perform further actions here, such as showing a success message or redirecting the user.
         },
         error: function() {
-            // Handle errors (if any)
             console.log("Error creating appointment!");
         }
     });

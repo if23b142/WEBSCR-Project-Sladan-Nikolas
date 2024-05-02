@@ -1,6 +1,5 @@
 <?php
 include("db/dataHandler.php");
-
 class SimpleLogic
 {
     private $dh;
