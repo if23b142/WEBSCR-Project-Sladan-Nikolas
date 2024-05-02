@@ -22,20 +22,14 @@ if( isset($_GET["method"]) && $_GET["method"] == "queryAppointments" ) {
     }
 }
 
-
 if (isset($_POST["method2"]) && $_POST["method2"] == "insertAppointment") {
-    $title = $_POST["title"];
-    $location = $_POST["location"];
-    $date = $_POST["date"];
-    $expiration_date = $_POST["expiration_date"];
-    $result = $logic->handleRequest2( $_POST["method2"], $title, $location, $date, $expiration_date );
+    $result = $logic->handleRequest2( $_POST["method2"], $_POST["title"], $_POST["location"], $_POST["date"], $_POST["expiration_date"]);
     if ($result == null) {
         response("POST", 400, null);
     } else {
         response("POST", 200, $result);
     }
 }
-
 
 function response($method, $httpStatus, $data)
 {
@@ -54,6 +48,3 @@ function response($method, $httpStatus, $data)
             echo ("Method not supported yet!");
     }
 }
-
-
-

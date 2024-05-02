@@ -12,5 +12,4 @@ class user
         $this->username = $username;
         $this->comment = $comment;
     }
-
 }
