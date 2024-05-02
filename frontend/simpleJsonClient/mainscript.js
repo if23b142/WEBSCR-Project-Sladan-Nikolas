@@ -171,7 +171,7 @@ function loaddata() {
 $('.appointment_form').submit(function(event) {
     // Prevent default form submission
     event.preventDefault();
-
+    
     // Capture form data
     var appointmentName = $('#appointmentName').val();
     var appointmentLocation = $('#appointmentLocation').val();
@@ -191,12 +191,9 @@ $('.appointment_form').submit(function(event) {
         },
         dataType: "json",
         success: function(response) {
-            // Handle success response from the server (if any)
             console.log("Appointment created successfully!");
-            // You can perform further actions here, such as showing a success message or redirecting the user.
         },
         error: function(response) {
-            // Handle errors (if any)
             console.log("Error creating appointment!");
         }
     });

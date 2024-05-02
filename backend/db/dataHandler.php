@@ -1,8 +1,6 @@
 <?php
 require_once('db.php');
 include("models/appointment.php");
-
-
 class DataHandler
 {
     public static function queryAppointments() {
